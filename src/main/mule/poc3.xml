@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="568072ef-586b-4445-a925-39b9ad650e21" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="4771ef9c-0a4f-4efa-87f0-963b344161c9" file="dev.properties" />
+	<flow name="pocFlow" doc:id="4d7cc166-14b5-4aa6-bace-7d957e21b2e6" >
+		<http:listener doc:name="Listener" doc:id="7c29456f-c665-4584-b6ef-83d260f0f607" config-ref="HTTP_Listener_config" path="/API"/>
+		<logger level="INFO" doc:name="Logger" doc:id="6e3cd79d-2e51-4a14-826f-2bc03006d4d3" message="STARTED FLOW"/>
+		<set-payload value='#["HI MULE"]' doc:name="Set Payload" doc:id="87684959-d22c-4453-8645-d2662a90620f" />
+	</flow>
+</mule>
