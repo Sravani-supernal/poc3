@@ -40,33 +40,48 @@ jobs:
           path: target/*.jar
 
   deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout this repo
-        uses: actions/checkout@v3
+   needs: build
+   runs-on: ubuntu-latest
+   steps:
+    - name: Checkout this repo
+      uses: actions/checkout@v4
 
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
 
-      - uses: actions/download-artifact@v4
-        with:
-          name: artifacts
+    - name: Download built artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: artifacts
 
-      - name: Publish to Exchange
-        run: |
-          mvn deploy --settings .maven/settings.xml -DskipMunitTests \
-          -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
-          -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}"
+    - name: Setup Maven settings for Connected App
+      run: |
+        mkdir -p ~/.m2
+        cat <<EOF > ~/.m2/settings.xml
+        <settings>
+          <pluginGroups>
+            <pluginGroup>org.mule.tools</pluginGroup>
+          </pluginGroups>
+          <servers>
+            <server>
+              <id>Repository</id>
+              <username>${{ secrets.CONNECTED_APP_CLIENT_ID }}</username>
+              <password>${{ secrets.CONNECTED_APP_CLIENT_SECRET }}</password>
+            </server>
+          </servers>
+        </settings>
+        EOF
 
-      - name: Deploy to CloudHub 2.0
-        run: |
-          mvn deploy --settings .maven/settings.xml -DskipMunitTests -DmuleDeploy \
-          -Dclient.id="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
-          -Dclient.secret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" \
-          -Ddecryption.key="${{ secrets.DECRYPTION_KEY }}"
+    - name: Deploy to CloudHub 2.0
+      run: |
+        artifactName=$(ls *.jar | head -1)
+        mvn deploy -DmuleDeploy \
+          -Danypoint.connectedApp.clientId="${{ secrets.CONNECTED_APP_CLIENT_ID }}" \
+          -Danypoint.connectedApp.clientSecret="${{ secrets.CONNECTED_APP_CLIENT_SECRET }}" \
+          -Ddecryption.key="${{ secrets.DECRYPTION_KEY }}" \
+          --settings ~/.m2/settings.xml
