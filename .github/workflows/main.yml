@@ -1,9 +1,14 @@
 on:
   push:
     branches: [ develop ]
+  pull_request: 
+    branches: [ develop ] 
+    types: [closed]
     
 jobs:         
   build:
+    if: github.event.pull_request.merged == true || github.event_name == 'push'
+    
     runs-on: ubuntu-latest
     steps:
       - name: Checkout this repo
