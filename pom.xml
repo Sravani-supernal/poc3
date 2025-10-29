@@ -6,7 +6,7 @@
 
 	<groupId>4b24f330-5596-4e15-8ff2-5929e0946a50</groupId>
 	<artifactId>sravani-reddy-poc-app</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>mule-application</packaging>
 
 	<name>sravani-reddy-poc-app</name>
