@@ -7,7 +7,7 @@ on:
     
 jobs:         
   build:
-  # This ensures the build runs only if the pull request is merged (not just closed)
+  # This ensures the build runs only if the pull request is merged (not just closed)-test purpose
     if: github.event.pull_request.merged == true || github.event_name == 'push'
     
     runs-on: ubuntu-latest
