@@ -54,7 +54,7 @@
 						<server>anypoint-connected-app</server>
 						<!-- <username>${user}</username> -->
 						<!-- <password>${pass}</password> -->
-						<applicationName>sravani-reddy-poc-app-dev</applicationName>
+						<applicationName>sravani-reddy-poc-app</applicationName>
 						<replicas>1</replicas>
 						<vCores>0.1</vCores>
 						<!-- <deploymentSettings> -->
