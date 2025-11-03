@@ -9,7 +9,7 @@
 <server>
   <id>anypoint-connected-app</id>
   <username>~~~Client~~~</username>
-  <password>385d13ff7a3a4fe0ab5be4b8add8bbcc~?~0a073c7859d24A399dEeF4A8Aa98a22c</password>
+  <password>${client.id}~?~${client.secret}</password>
 
 </server>
   </servers>
