@@ -1,8 +1,8 @@
 on:
   push:
-    branches: [ develop ]
+    branches: [ sandbox ]
   pull_request: 
-    branches: [ develop ] 
+    branches: [ sandbox ] 
     types: [closed]
     
 jobs:         
