@@ -49,7 +49,7 @@
 						<uri>https://anypoint.mulesoft.com</uri>
 						<provider>MC</provider>
 						<environment>Sandbox</environment>
-						<target>${targetName}</target>
+						<target>Cloudhub-US-East-2</target>
 						<muleVersion>4.10.0</muleVersion>
 						<server>anypoint-connected-app</server>
 						<!-- <username>${user}</username> -->
