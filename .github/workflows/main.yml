@@ -5,7 +5,7 @@ on:
     branches:
       - develop
       - qa
-      - Sandbox
+      - sandbox
   pull_request:
     branches: [ develop ]
     types: [ closed ]
