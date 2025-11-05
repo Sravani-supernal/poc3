@@ -32,6 +32,23 @@ jobs:
           distribution: 'zulu'
           java-version: 8
 
+      - name: Determine deployment environment
+        id: set-env
+        run: |
+          # Default CloudHub target (same for all)
+          echo "target=Cloudhub-US-East-2" >> $GITHUB_OUTPUT
+          
+          # Map branch → environment and app name
+          if [[ "${GITHUB_REF##*/}" == "develop" ]]; then
+            echo "env_name=dev" >> $GITHUB_OUTPUT
+            echo "app_name=sravani-reddy-poc-app-dev" >> $GITHUB_OUTPUT
+          elif [[ "${GITHUB_REF##*/}" == "qa" ]]; then
+            echo "env_name=qa" >> $GITHUB_OUTPUT
+            echo "app_name=sravani-reddy-poc-app-qa" >> $GITHUB_OUTPUT
+          elif [[ "${GITHUB_REF##*/}" == "sandbox" ]]; then
+            echo "env_name=sandbox" >> $GITHUB_OUTPUT
+            echo "app_name=sravani-reddy-poc-app-sandbox" >> $GITHUB_OUTPUT
+          fi
 
       - name: Publish to Exchange
         run: |
